@@ -15,7 +15,6 @@ async function registerUser(req, res) {
 
 
 
-
   async function loginUser(req, res) {
     const { email, password } = req.body;
     const sql = 'SELECT Id_user, name, last_name, email, photo FROM user WHERE email = ? AND password = ?';
@@ -33,7 +32,7 @@ async function registerUser(req, res) {
         };
         res.send({ success: true, user });
       } else {
-        res.send('no existe'); 
+        res.send({ success: false, message: 'Los datos de inicio de sesión no coinciden' });
       }
     } catch (error) {
       res.send(error);
