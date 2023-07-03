@@ -16,5 +16,5 @@ const pool = mysql.createPool(
 
 console.log("Conexión con la BBDD creada");
 
-
+ 
 module.exports = {pool};

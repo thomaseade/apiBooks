@@ -11,10 +11,10 @@ async function registerUser(req, res) {
     } catch (error) {
       res.send(error);
     }
-  }
+  } 
 
 
-
+ 
   async function loginUser(req, res) {
     const { email, password } = req.body;
     const sql = 'SELECT Id_user, name, last_name, email, photo FROM user WHERE email = ? AND password = ?';
