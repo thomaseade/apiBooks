@@ -39,11 +39,47 @@ async function registerUser(req, res) {
     }
   }
 
+  async function updateUser(req, res) {
+    const { id_user, name, last_name, email, photo } = req.body;
+    const sql = 'UPDATE user SET name = ?, last_name = ?, email = ?, photo = ? WHERE id_user = ?';
+    const params = [name, last_name, email, photo, id_user];
+  
+    try {
+      await pool.query(sql, params);
+      res.json({ message: 'Usuario actualizado correctamente' });
+    } catch (error) {
+      res.status(500).send(error);
+    } 
+  }
 
- 
 
+  async function getUserById(req, res) {
+    const userId = req.params.id;
+    const sql = 'SELECT * FROM user WHERE id_user = ?';
+    const params = [userId];
+  
+    try {
+      const [rows] = await pool.query(sql, params);
+      if (rows.length > 0) {
+        const user = {
+          id_user: rows[0].id_user,
+          name: rows[0].name,
+          last_name: rows[0].last_name,
+          email: rows[0].email,
+          photo: rows[0].photo
+        };
+        res.send(user);
+      } else {
+        res.status(404).send({ message: 'Usuario no encontrado' });
+      }
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  }
 
   module.exports = {
     registerUser,
     loginUser,
+    updateUser,
+    getUserById, 
   };
